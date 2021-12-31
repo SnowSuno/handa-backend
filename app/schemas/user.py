@@ -1,19 +1,11 @@
-from fastapi_users import models
-from tortoise.contrib.pydantic import PydanticModel
+from pydantic import BaseModel
 
-from app.models.user import UserModel
+class UserBase(BaseModel):
+    username: str
+    password: str
 
-
-class User(models.BaseUser):
+class UserCreate(UserBase):
     pass
 
-class UserCreate(models.BaseUserCreate):
+class UserUpdate(UserBase):
     pass
-
-class UserUpdate(models.BaseUserUpdate):
-    pass
-
-class UserDB(User, models.BaseUserDB, PydanticModel):
-    class Config:
-        orm_mode = True
-        orig_model = UserModel
