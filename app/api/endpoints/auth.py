@@ -7,4 +7,9 @@ router = APIRouter()
 
 @router.post("/register")
 async def register_user(user: schemas.UserCreate):
+    """
+    Register a new user
+    """
     await user_manager.create_user(user)
+
+
