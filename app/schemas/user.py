@@ -2,10 +2,15 @@ from pydantic import BaseModel
 
 class UserBase(BaseModel):
     username: str
-    password: str
+
+class User(UserBase):
+    pass
+
+class UserWithToken(User):
+    token: str
 
 class UserCreate(UserBase):
-    pass
+    password: str
 
 class UserUpdate(UserBase):
-    pass
+    password: str
