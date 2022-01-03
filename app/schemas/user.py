@@ -1,10 +1,14 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
 
 class UserBase(BaseModel):
-    username: str
+    id: str
+    email: EmailStr
+    nickname: str
 
 class User(UserBase):
-    pass
+    is_verified: bool
+    registered_at: datetime
 
 class UserWithToken(User):
     token: str
