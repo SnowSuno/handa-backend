@@ -1,13 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app import schemas, models
+from app import schemas
+from app.core.security import authenticate_user
 from app.services.user import create_user
 from app.services.registration import check_unique_fields_is_available
 
-
 router = APIRouter()
-
 
 @router.post(
     "/register",
@@ -20,7 +19,14 @@ async def register_user(user: schemas.UserCreate):
     return await create_user(user)
 
 
-@router.post("/login")
+@router.post(
+    "/login",
+    response_model=schemas.Token,
+    responses={401: {}}
+)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    return {}
-
+    token = await authenticate_user(
+        username=form_data.username,
+        password=form_data.password
+    )
+    return token
