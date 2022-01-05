@@ -1,19 +1,29 @@
-from fastapi_users import models
-from tortoise.contrib.pydantic import PydanticModel
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
+from tortoise.contrib.pydantic import pydantic_model_creator
+from app import models
 
-from app.models.user import UserModel
+class UserBase(BaseModel):
+    id: str
+    email: EmailStr
+    nickname: str
 
-
-class User(models.BaseUser):
-    pass
-
-class UserCreate(models.BaseUserCreate):
-    pass
-
-class UserUpdate(models.BaseUserUpdate):
-    pass
-
-class UserDB(User, models.BaseUserDB, PydanticModel):
     class Config:
         orm_mode = True
-        orig_model = UserModel
+
+class User(UserBase):
+    is_verified: bool
+    registered_at: datetime
+
+# class UserWithToken(User):
+#     access_token: str
+#     token_type: str
+
+class UserCreate(UserBase):
+    password: str
+
+class UserUpdate(UserBase):
+    password: str
+
+
+UserDB = pydantic_model_creator(models.User)

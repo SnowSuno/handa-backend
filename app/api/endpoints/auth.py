@@ -1,14 +1,32 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from fastapi.security import OAuth2PasswordRequestForm
 
-from app.core.users import auth_backend, current_active_user, fastapi_users
+from app import schemas
+from app.core.security import authenticate_user
+from app.services.user import create_user
+from app.services.registration import check_unique_fields_is_available
 
 router = APIRouter()
 
-router.include_router(
-    fastapi_users.get_auth_router(auth_backend), prefix="/jwt"
+@router.post(
+    "/register",
+    status_code=201,
+    response_model=schemas.User,
+    responses={400: {"description": "Already registered ID or email"}}
 )
+async def register_user(user: schemas.UserCreate):
+    await check_unique_fields_is_available(user, auto_exception=True)
+    return await create_user(user)
 
-router.include_router(fastapi_users.get_register_router())
-router.include_router(fastapi_users.get_reset_password_router())
-router.include_router(fastapi_users.get_verify_router())
 
+@router.post(
+    "/login",
+    response_model=schemas.Token,
+    responses={401: {}}
+)
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    token = await authenticate_user(
+        username=form_data.username,
+        password=form_data.password
+    )
+    return token
