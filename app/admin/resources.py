@@ -40,3 +40,16 @@ class AdminResource(Model):
 
     # async def get_toolbar_actions(self, request: Request) -> List[ToolbarAction]:
     #     return []
+
+@app.register
+class UserResource(Model):
+    label = "Users"
+    model = models.User
+    icon = "fas fa-user"
+    page_pre_title = "user list"
+    page_title = "user model"
+
+    fields = [
+        "username",
+        "email"
+    ]
