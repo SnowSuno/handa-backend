@@ -35,10 +35,10 @@ def decode_access_token(token: str) -> str:
         if expire is None or datetime.now() >= datetime.fromtimestamp(expire):
             raise TokenError
 
-        uuid = payload.get("sub")
-        if uuid is None:
+        user_id = payload.get("sub")
+        if user_id is None:
             raise TokenError
-        return uuid
+        return user_id
 
     except JWTError:
         raise TokenError
@@ -48,15 +48,15 @@ def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
 
-async def get_user_by_id_or_email(username: str) -> Optional[models.User]:
+async def get_user_by_username_or_email(username: str) -> Optional[models.User]:
     try:
         valid = validate_email(username)
         return await models.User.get(email=valid.email)
     except EmailNotValidError:
-        return await models.User.get_or_none(id=username)
+        return await models.User.get_or_none(username=username)
 
 async def authenticate_user(username: str, password: str) -> schemas.Token:
-    user = await get_user_by_id_or_email(username)
+    user = await get_user_by_username_or_email(username)
     if not user:
         raise HTTPException(
             status_code=404,
@@ -68,7 +68,7 @@ async def authenticate_user(username: str, password: str) -> schemas.Token:
             detail="Incorrect password"
         )
 
-    token = create_access_token(str(user.uuid))
+    token = create_access_token(str(user.id))
     return schemas.Token(
         access_token=token,
         token_type="bearer"

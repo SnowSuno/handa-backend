@@ -20,6 +20,6 @@ async def check_email_is_available(email: str, auto_exception: bool = False) -> 
     return is_available
 
 async def check_unique_fields_is_available(user: schemas.UserCreate, auto_exception: bool = False):
-    id_is_available = await check_id_is_available(user.id, auto_exception=auto_exception)
+    id_is_available = await check_id_is_available(user.username, auto_exception=auto_exception)
     email_is_available = await check_email_is_available(user.email, auto_exception=auto_exception)
     return id_is_available and email_is_available

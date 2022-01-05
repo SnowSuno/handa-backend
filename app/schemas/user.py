@@ -4,7 +4,7 @@ from tortoise.contrib.pydantic import pydantic_model_creator
 from app import models
 
 class UserBase(BaseModel):
-    id: str
+    username: str
     email: EmailStr
     nickname: str
 

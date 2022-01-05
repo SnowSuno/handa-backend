@@ -3,8 +3,8 @@ from tortoise import fields, models
 
 
 class User(models.Model):
-    uuid = fields.UUIDField(pk=True)
-    id = fields.CharField(max_length=30, unique=True)
+    id = fields.UUIDField(pk=True)
+    username = fields.CharField(max_length=30, unique=True)
     email = fields.CharField(max_length=50, unique=True)
     nickname = fields.CharField(max_length=30)
     hashed_password = fields.CharField(max_length=200)

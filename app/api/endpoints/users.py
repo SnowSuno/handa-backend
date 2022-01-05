@@ -24,7 +24,7 @@ async def create_todo(
     todo: schemas.TodoCreate,
     current_user: models.User = Depends(get_current_user)
 ):
-    return await models.Todo.create(**todo.dict(), creator_id=current_user.uuid)
+    return await models.Todo.create(**todo.dict(), creator_id=current_user.id)
 
 async def get_updateable_todo(
     todo_id: UUID,
@@ -38,7 +38,7 @@ async def get_updateable_todo(
         )
 
     creator = await todo.creator
-    if creator.uuid != current_user.uuid:
+    if creator.username != current_user.id:
         raise HTTPException(
             status_code=403,
             detail="Can only update todos created by user"

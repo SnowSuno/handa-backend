@@ -15,11 +15,11 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> models.User:
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        uuid = decode_access_token(token)
+        user_id = decode_access_token(token)
     except TokenError:
         raise credentials_exception
 
-    user = await models.User.get_or_none(uuid=uuid)
+    user = await models.User.get_or_none(id=user_id)
     if user is None:
         raise credentials_exception
 
