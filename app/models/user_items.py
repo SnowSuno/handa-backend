@@ -21,7 +21,7 @@ class Todo(models.Model):
     is_done = fields.BooleanField(default=False)
 
     creator: fields.ForeignKeyRelation[User] = fields.ForeignKeyField(
-        "models.User", related_name="todos"
+        "models.User", related_name="todos", on_delete=fields.CASCADE
     )
 
 
