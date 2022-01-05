@@ -16,8 +16,7 @@ class TokenError(Exception):
 
 def create_access_token(uuid: str) -> str:
     expire = datetime.utcnow() + timedelta(
-        # minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
-        seconds=30
+        days=settings.ACCESS_TOKEN_EXPIRE_DAYS
     )
     return jwt.encode(
         {"sub": uuid, "exp": expire},

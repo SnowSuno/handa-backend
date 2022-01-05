@@ -5,26 +5,29 @@ from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, PostgresDsn, v
 
 
 class Settings(BaseSettings):
+    PROJECT_NAME: str = "Handa Backend"
+
     # SECRET_KEY: str = secrets.token_urlsafe(32)
-    SECRET_KEY: str = 'GPMIGDMSoPTecevxb7G00t8aQw6gOpSk9naPRYx6Fzk'
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
+    SECRET_KEY: str = 'FakeSecretTecevxb7G00t8aQw6gOpSk9naPRYx6Fzk'  # development temp key
+    ACCESS_TOKEN_EXPIRE_DAYS: int = 30
     ALGORITHM: str = "HS256"
+
     # SERVER_NAME: str
-    # SERVER_HOST: AnyHttpUrl
+    # SERVER_HOST:
+
     # # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
-    # # e.g: '["http://localhost", "http://localhost:4200", "http://localhost:3000", \
-    # # "http://localhost:8080", "http://local.dockertoolbox.tiangolo.com"]'
-    # BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
-    #
-    # @validator("BACKEND_CORS_ORIGINS", pre=True)
-    # def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
-    #     if isinstance(v, str) and not v.startswith("["):
-    #         return [i.strip() for i in v.split(",")]
-    #     elif isinstance(v, (list, str)):
-    #         return v
-    #     raise ValueError(v)
-    #
-    # PROJECT_NAME: str = "Handa"
+    # e.g: '["http://localhost", "http://localhost:4200", "http://localhost:3000", \
+    # "http://localhost:8080", "http://local.dockertoolbox.tiangolo.com"]'
+    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
+
+    @validator("BACKEND_CORS_ORIGINS", pre=True)
+    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
+        if isinstance(v, str) and not v.startswith("["):
+            return [i.strip() for i in v.split(",")]
+        elif isinstance(v, (list, str)):
+            return v
+        raise ValueError(v)
+
     # SENTRY_DSN: Optional[HttpUrl] = None
     #
     # @validator("SENTRY_DSN", pre=True)
@@ -33,6 +36,8 @@ class Settings(BaseSettings):
     #         return None
     #     return v
     #
+
+    DATABASE_URL: str = 'sqlite://db.sqlite3'
     # POSTGRES_SERVER: str
     # POSTGRES_USER: str
     # POSTGRES_PASSWORD: str
