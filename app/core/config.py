@@ -38,6 +38,7 @@ class Settings(BaseSettings):
     #
 
     DATABASE_URL: str = 'sqlite://db.sqlite3'
+
     # POSTGRES_SERVER: str
     # POSTGRES_USER: str
     # POSTGRES_PASSWORD: str
