@@ -9,6 +9,15 @@ from app.services.registration import check_unique_fields_is_available
 router = APIRouter()
 
 @router.post(
+    "/check-available",
+    response_model=schemas.UserCheckResponse
+)
+async def check_user_unique(check: schemas.UserCheck):
+    return schemas.UserCheckResponse(
+        is_available=await check_unique_fields_is_available(check)
+    )
+
+@router.post(
     "/register",
     status_code=201,
     response_model=schemas.User,

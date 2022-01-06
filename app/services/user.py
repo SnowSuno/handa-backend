@@ -1,8 +1,3 @@
-from typing import Optional
-
-from fastapi import Depends, HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
-from email_validator import validate_email, EmailNotValidError
 from app import schemas, models
 from app.core.security import hash_password
 
