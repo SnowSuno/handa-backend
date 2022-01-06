@@ -1,7 +1,13 @@
+from typing import Optional
+
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from tortoise.contrib.pydantic import pydantic_model_creator
 from app import models
+
+class UserCheck(BaseModel):
+    username: Optional[str] = None
+    email: Optional[str] = None
 
 class UserBase(BaseModel):
     username: str
