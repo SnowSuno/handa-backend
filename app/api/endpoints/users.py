@@ -13,6 +13,14 @@ router = APIRouter(
 async def read_current_user(current_user: models.User = Depends(get_current_user)):
     return current_user
 
+@router.put("/me")
+async def update_current_user(
+    user: schemas.UserUpdate,
+    current_user: models.User = Depends(get_current_user)
+):
+    # TODO
+    return {"message": "Not implemented yet"}
+
 
 @router.get("/me/todos", response_model=List[schemas.Todo])
 async def read_todos_of_current_user(current_user: models.User = Depends(get_current_user)):
