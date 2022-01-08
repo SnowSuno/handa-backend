@@ -7,7 +7,7 @@ from app import models
 
 class UserCheck(BaseModel):
     username: Optional[str] = None
-    email: Optional[str] = None
+    email: Optional[EmailStr] = None
 
 class UserBase(BaseModel):
     username: str
@@ -28,8 +28,8 @@ class User(UserBase):
 class UserCreate(UserBase):
     password: str
 
-class UserUpdate(UserBase):
-    password: str
+class UserUpdate(BaseModel):
+    nickname: Optional[str] = None
 
 
 UserDB = pydantic_model_creator(models.User)
