@@ -16,3 +16,6 @@ class User(models.Model):
     registered_at = fields.DatetimeField(auto_now=True)
 
     todos: fields.ReverseRelation["Todo"]
+
+    def __str__(self):
+        return self.username
