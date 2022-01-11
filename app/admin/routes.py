@@ -2,11 +2,11 @@ from fastapi import Depends
 from starlette.requests import Request
 
 from fastapi_admin.app import app
-from fastapi_admin.depends import get_resources
+from fastapi_admin.depends import get_resources, get_current_admin
 from fastapi_admin.template import templates
 
 
-@app.get("/")
+@app.get("/", dependencies=[Depends(get_current_admin)])
 async def home(
     request: Request,
     resources=Depends(get_resources),

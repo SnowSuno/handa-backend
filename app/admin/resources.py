@@ -126,11 +126,3 @@ class TodoResource(Model):
 
 
     ]
-
-
-@app.register
-class DocumentationLink(Link):
-    label = "Documentation"
-    url = "https://service-handa.herokuapp.com/docs"
-    icon = "fas fa-file-code"
-    target = "_blank"

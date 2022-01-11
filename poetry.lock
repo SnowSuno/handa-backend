@@ -699,8 +699,8 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "3.10.0"
-content-hash = "f66ddb1672cbf2136e3968318be461486eea94c70baa23c8a73916c0e17cc78e"
+python-versions = "3.10.1"
+content-hash = "91e91251bee67357efef99a35829d38105027aab2d309e8ae08e3b9e11d0428f"
 
 [metadata.files]
 aerich = [
