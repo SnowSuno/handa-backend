@@ -1,6 +1,9 @@
-from __future__ import annotations
 from tortoise import fields, models
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .todo import Todo
 
 class User(models.Model):
     id = fields.UUIDField(pk=True)
@@ -12,19 +15,4 @@ class User(models.Model):
     is_active = fields.BooleanField(default=False)
     registered_at = fields.DatetimeField(auto_now=True)
 
-    todos: fields.ReverseRelation[Todo]
-
-
-class Todo(models.Model):
-    id = fields.UUIDField(pk=True)
-    title = fields.CharField(max_length=200)
-    due_date = fields.DateField()
-    is_done = fields.BooleanField(default=False)
-
-    creator: fields.ForeignKeyRelation[User] = fields.ForeignKeyField(
-        "models.User", related_name="todos", on_delete=fields.CASCADE
-    )
-
-
-
-
+    todos: fields.ReverseRelation["Todo"]
