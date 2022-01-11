@@ -1,24 +1,15 @@
 from fastapi import FastAPI
-from tortoise.contrib.fastapi import register_tortoise
+from piccolo.engine import engine_finder
 
 from app.core.config import settings
 
-TORTOISE_ORM = {
-    'connections': {
-        'default': settings.DATABASE_URL,
-    },
-    'apps': {
-        'models': {
-            'models': ["app.models", "aerich.models"],
-            'default_connection': 'default',
-        }
-    }
-}
-
 def db_init(app: FastAPI):
-    register_tortoise(
-        app,
-        config=TORTOISE_ORM,
-        generate_schemas=True,
-        add_exception_handlers=True,
-    )
+    @app.on_event("startup")
+    async def open_database_connection_pool():
+        engine = engine_finder(module_name=settings.PICCOLO_CONF)
+        await engine.start_connnection_pool()
+
+    @app.on_event("shutdown")
+    async def close_database_connection_pool():
+        engine = engine_finder(module_name=settings.PICCOLO_CONF)
+        await engine.close_connnection_pool()

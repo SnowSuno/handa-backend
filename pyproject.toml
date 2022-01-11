@@ -15,6 +15,7 @@ pydantic = {extras = ["email"], version = "^1.9.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 fakeredis = "^1.7.0"
 aerich = "^0.6.1"
+piccolo = {extras = ["postgres", "sqlite"], version = "^0.62.3"}
 
 [tool.poetry.dev-dependencies]
 
