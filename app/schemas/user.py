@@ -19,15 +19,8 @@ class User(UserBase):
     is_verified: bool
     registered_at: datetime
 
-# class UserWithToken(User):
-#     access_token: str
-#     token_type: str
-
 class UserCreate(UserBase):
     password: str
 
 class UserUpdate(BaseModel):
     nickname: Optional[str] = None
-
-
-# UserDB = pydantic_model_creator(models.User)
