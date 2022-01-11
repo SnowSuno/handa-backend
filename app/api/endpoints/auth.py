@@ -2,8 +2,6 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
 from app import schemas, models
-# from app.core.security import authenticate_user
-# from app.services.user import create_user
 from app.services.registration import check_unique_fields_is_available
 
 router = APIRouter()
