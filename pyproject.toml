@@ -5,7 +5,7 @@ description = ""
 authors = ["SnowSuno <snowsuno.dev@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "3.10.0"
 fastapi = "^0.71.0"
 uvicorn = "^0.16.0"
 tortoise-orm = "0.17.8"
