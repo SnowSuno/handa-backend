@@ -1,4 +1,23 @@
-[tool.aerich]
-tortoise_orm = "app.db.database.TORTOISE_ORM"
-location = "./migrations"
-src_folder = "./."
+[tool.poetry]
+name = "handa-backend"
+version = "0.1.0"
+description = ""
+authors = ["SnowSuno <snowsuno.dev@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.71.0"
+uvicorn = "^0.16.0"
+tortoise-orm = "0.17.8"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+fastapi-admin = "^1.0.3"
+pydantic = {extras = ["email"], version = "^1.9.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+fakeredis = "^1.7.0"
+aerich = "^0.6.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
