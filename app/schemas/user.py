@@ -2,8 +2,6 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from tortoise.contrib.pydantic import pydantic_model_creator
-from app import models
 
 class UserCheck(BaseModel):
     username: Optional[str] = None
@@ -32,4 +30,4 @@ class UserUpdate(BaseModel):
     nickname: Optional[str] = None
 
 
-UserDB = pydantic_model_creator(models.User)
+# UserDB = pydantic_model_creator(models.User)

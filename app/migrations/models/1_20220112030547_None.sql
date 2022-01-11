@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS "user" (
 CREATE TABLE IF NOT EXISTS "todo" (
     "id" CHAR(36) NOT NULL  PRIMARY KEY,
     "title" VARCHAR(200) NOT NULL,
+    "due_date" DATE NOT NULL,
     "is_done" INT NOT NULL  DEFAULT 0,
     "creator_id" CHAR(36) NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE
 );
