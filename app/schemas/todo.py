@@ -1,11 +1,11 @@
 from typing import Optional
 from datetime import date
 
-from pydantic import BaseModel
+from pydantic import BaseModel, constr
 from uuid import UUID
 
 class TodoBase(BaseModel):
-    title: str
+    title: constr(max_length=200)
     due_date: date
 
     class Config:

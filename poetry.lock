@@ -277,7 +277,7 @@ lua = ["lupa"]
 
 [[package]]
 name = "fastapi"
-version = "0.71.0"
+version = "0.72.0"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 category = "main"
 optional = false
@@ -700,7 +700,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.1"
-content-hash = "91e91251bee67357efef99a35829d38105027aab2d309e8ae08e3b9e11d0428f"
+content-hash = "63ff5650324c8a28837a5f599c6593925ba9edfef9b6b51991b3d67798db5e69"
 
 [metadata.files]
 aerich = [
@@ -886,8 +886,8 @@ fakeredis = [
     {file = "fakeredis-1.7.0.tar.gz", hash = "sha256:c9bd12e430336cbd3e189fae0e91eb99997b93e76dbfdd6ed67fa352dc684c71"},
 ]
 fastapi = [
-    {file = "fastapi-0.71.0-py3-none-any.whl", hash = "sha256:a78eca6b084de9667f2d5f37e2ae297270e5a119cd01c2f04815795da92fc87f"},
-    {file = "fastapi-0.71.0.tar.gz", hash = "sha256:2b5ac0ae89c80b40d1dd4b2ea0bb1f78d7c4affd3644d080bf050f084759fff2"},
+    {file = "fastapi-0.72.0-py3-none-any.whl", hash = "sha256:7421a2f30e9ed1866874cff089733d4f9a0cd4f49b6ea3995c0de75e32bbb52f"},
+    {file = "fastapi-0.72.0.tar.gz", hash = "sha256:019ec52c00581bc055e6dfb621aaa9c2a56007c283839305412e1073a777eaf1"},
 ]
 fastapi-admin = [
     {file = "fastapi-admin-1.0.3.tar.gz", hash = "sha256:8db76b6f2b30dd45c421d4da80df87fd4d37fb2e588d172c0773b7c4c9328ec6"},

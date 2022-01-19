@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, constr
 from datetime import datetime
 
 class UserCheck(BaseModel):
@@ -8,9 +8,9 @@ class UserCheck(BaseModel):
     email: Optional[EmailStr] = None
 
 class UserBase(BaseModel):
-    username: str
+    username: constr(max_length=30)
     email: EmailStr
-    nickname: str
+    nickname: constr(max_length=30)
 
     class Config:
         orm_mode = True
@@ -19,15 +19,12 @@ class User(UserBase):
     is_verified: bool
     registered_at: datetime
 
-# class UserWithToken(User):
-#     access_token: str
-#     token_type: str
-
 class UserCreate(UserBase):
+    password: str
+
+class UserLogin(BaseModel):
+    username: str
     password: str
 
 class UserUpdate(BaseModel):
     nickname: Optional[str] = None
-
-
-# UserDB = pydantic_model_creator(models.User)
