@@ -5,7 +5,7 @@ from app import models
 from app.core.security import decode_access_token, TokenError
 
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="auth/login"
+    tokenUrl="auth/login-docs"
 )
 
 async def get_current_user(token: str = Depends(oauth2_scheme)) -> models.User:

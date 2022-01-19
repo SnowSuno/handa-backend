@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from fastapi.security import OAuth2PasswordRequestForm
 
 from app import schemas, models
 from app.services.registration import check_unique_fields_is_available
@@ -34,6 +35,23 @@ async def register_user(user: schemas.UserCreate):
     }
 )
 async def login(form_data: schemas.UserLogin):
+    token = await models.User.authenticate(
+        username=form_data.username,
+        password=form_data.password
+    )
+    return token
+
+
+@router.post(
+    "/login-docs",
+    response_model=schemas.Token,
+    responses={
+        401: {"description": "Incorrect password"},
+        404: {"description": "User doesn't exist (wrong username)"},
+    },
+    description="Endpoint for docs authentication"
+)
+async def login_docs(form_data: OAuth2PasswordRequestForm = Depends()):
     token = await models.User.authenticate(
         username=form_data.username,
         password=form_data.password
