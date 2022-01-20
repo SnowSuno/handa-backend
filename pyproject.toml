@@ -11,10 +11,11 @@ uvicorn = "^0.16.0"
 tortoise-orm = {version = "0.17.8", extras = ["asyncpg"]}
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 fastapi-admin = "^1.0.3"
-pydantic = {extras = ["email"], version = "^1.9.0"}
+pydantic = {extras = ["email", "dotenv"], version = "^1.9.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 fakeredis = "^1.7.0"
 aerich = "^0.6.1"
+boto3 = "^1.20.37"
 
 [tool.poetry.dev-dependencies]
 

@@ -39,6 +39,10 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = 'sqlite://db.sqlite3'
 
+    SPACES_KEY: str
+    SPACES_SECRET: str
+
+
     # POSTGRES_SERVER: str
     # POSTGRES_USER: str
     # POSTGRES_PASSWORD: str
@@ -92,4 +96,4 @@ class Settings(BaseSettings):
     #     case_sensitive = True
 
 
-settings = Settings()
+settings = Settings(_env_file=".env")
