@@ -15,6 +15,7 @@ TORTOISE_ORM = {
     }
 }
 
+
 def db_init(app: FastAPI):
     register_tortoise(
         app,
