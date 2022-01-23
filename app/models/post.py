@@ -2,6 +2,7 @@ from tortoise import fields, models
 
 from .user import User
 
+
 class AbstractPost(models.Model):
     class Meta:
         abstract = True
@@ -16,8 +17,10 @@ class AbstractPost(models.Model):
     def __str__(self):
         return f"{self.content[:10]}..."
 
+
 class TodoPost(AbstractPost):
     pass
+
 
 class CompletePost(AbstractPost):
     pass
