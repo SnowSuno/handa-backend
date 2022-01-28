@@ -23,7 +23,7 @@ class User(models.Model):
 
     todos: fields.ReverseRelation["Todo"]
 
-    following: fields.ManyToManyRelation["User"] = fields.ManyToManyField(
+    followings: fields.ManyToManyRelation["User"] = fields.ManyToManyField(
         "models.User", related_name="followers"
     )
 

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, constr
+from pydantic import BaseModel, EmailStr, constr, SecretStr
 from datetime import datetime
 
 
@@ -21,6 +21,14 @@ class UserBase(BaseModel):
 class User(UserBase):
     is_verified: bool
     registered_at: datetime
+
+
+class UserPublicOut(User):
+    email: SecretStr
+
+
+class UserPublicIn(BaseModel):
+    username: str
 
 
 class UserCreate(UserBase):
