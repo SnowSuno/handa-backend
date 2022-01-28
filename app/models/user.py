@@ -23,6 +23,12 @@ class User(models.Model):
 
     todos: fields.ReverseRelation["Todo"]
 
+    following: fields.ManyToManyRelation["User"] = fields.ManyToManyField(
+        "models.User", related_name="followers"
+    )
+
+    followers: fields.ManyToManyRelation["User"]
+
     def __str__(self):
         return self.username
 
