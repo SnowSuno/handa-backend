@@ -3,9 +3,11 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr, constr
 from datetime import datetime
 
+
 class UserCheck(BaseModel):
     username: Optional[str] = None
     email: Optional[EmailStr] = None
+
 
 class UserBase(BaseModel):
     username: constr(max_length=30)
@@ -15,16 +17,20 @@ class UserBase(BaseModel):
     class Config:
         orm_mode = True
 
+
 class User(UserBase):
     is_verified: bool
     registered_at: datetime
 
+
 class UserCreate(UserBase):
     password: str
+
 
 class UserLogin(BaseModel):
     username: str
     password: str
+
 
 class UserUpdate(BaseModel):
     nickname: Optional[str] = None

@@ -10,6 +10,7 @@ from app.core.security import hash_password, pwd_context, create_access_token
 if TYPE_CHECKING:
     from .todo import Todo
 
+
 class User(models.Model):
     id = fields.UUIDField(pk=True)
     username = fields.CharField(max_length=30, unique=True)
