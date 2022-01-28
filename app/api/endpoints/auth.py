@@ -4,7 +4,10 @@ from fastapi.security import OAuth2PasswordRequestForm
 from app import schemas, models
 from app.services.registration import check_unique_fields_is_available
 
-router = APIRouter()
+router = APIRouter(
+    tags=["auth"]
+)
+
 
 @router.post(
     "/check-available",
@@ -14,6 +17,7 @@ async def check_user_unique(check: schemas.UserCheck):
     return schemas.UserCheckResponse(
         is_available=await check_unique_fields_is_available(check)
     )
+
 
 @router.post(
     "/register",

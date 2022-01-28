@@ -10,6 +10,7 @@ from app.core.security import hash_password, pwd_context, create_access_token
 if TYPE_CHECKING:
     from .todo import Todo
 
+
 class User(models.Model):
     id = fields.UUIDField(pk=True)
     username = fields.CharField(max_length=30, unique=True)
@@ -21,6 +22,12 @@ class User(models.Model):
     registered_at = fields.DatetimeField(auto_now=True)
 
     todos: fields.ReverseRelation["Todo"]
+
+    followings: fields.ManyToManyRelation["User"] = fields.ManyToManyField(
+        "models.User", related_name="followers"
+    )
+
+    followers: fields.ManyToManyRelation["User"]
 
     def __str__(self):
         return self.username
