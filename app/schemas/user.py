@@ -23,6 +23,7 @@ class Detail(BaseModel):
     num_posts: int
     num_followers: int
     num_followings: int
+    num_completed_todos: int
 
 
 class User(UserBase):

@@ -38,7 +38,10 @@ class User(models.Model):
                 desc=self.desc,
                 num_posts=0,  # TODO : Not implemented
                 num_followers=len(self.followers),
-                num_followings=len(self.followings)
+                num_followings=len(self.followings),
+                num_completed_todos=len([
+                    todo for todo in self.todos if todo.is_done
+                ])
             )
         except NoValuesFetched:
             return None
