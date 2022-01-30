@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Optional
 
 from fastapi import HTTPException
 from tortoise import fields, models
+from tortoise.exceptions import NoValuesFetched
 from email_validator import validate_email, EmailNotValidError
 
 from app import schemas
@@ -33,13 +34,24 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
-    @property
-    def num_followings(self) -> int:
-        return len(self.followings)
+    # @property
+    # def num_followings(self) -> int:
+    #     return len(self.followings)
+    #
+    # @property
+    # def num_followers(self) -> int:
+    #     return len(self.followers)
 
     @property
-    def num_followers(self) -> int:
-        return len(self.followers)
+    def detail(self) -> Optional[schemas.Detail]:
+        try:
+            return schemas.Detail(
+                desc=self.desc,
+                num_followers=len(self.followers),
+                num_followings=len(self.followings)
+            )
+        except NoValuesFetched:
+            return None
 
     @classmethod
     async def register(cls, user: schemas.UserCreate):

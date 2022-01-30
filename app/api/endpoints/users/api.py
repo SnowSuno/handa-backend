@@ -8,27 +8,31 @@ router = APIRouter(
 )
 
 
-@router.get("/me", response_model=schemas.User)
-async def read_current_user(current_user: models.User = Depends(get_current_user)):
-    await current_user.fetch_related("followings", "followers")
+@router.get(
+    "/me",
+    response_model=schemas.User,
+    response_model_exclude_none=True)
+async def read_current_user(
+        detail: bool = False,
+        current_user: models.User = Depends(get_current_user)
+):
+    if detail:
+        await current_user.fetch_related("followings", "followers")
     return current_user
 
 
-@router.get("/me/detail", response_model=schemas.UserDetail)
-async def read_current_user_detail(current_user: models.User = Depends(get_current_user)):
-    await current_user.fetch_related("followings", "followers")
-    return current_user
-
-
-@router.get("/{username}", response_model=schemas.UserPublic)
-async def read_user(username: str):
-    return await models.User.get(username=username)
-
-
-@router.get("/{username}/detail", response_model=schemas.UserPublicDetail)
-async def read_user_detail(username: str):
-    return await models.User.get(username=username)\
-        .prefetch_related("followings", "followers")
+@router.get(
+    "/{username}",
+    response_model=schemas.UserPublic,
+    response_model_exclude_none=True)
+async def read_user(
+        username: str,
+        detail: bool = False,
+):
+    user = await models.User.get(username=username)
+    if detail:
+        await user.fetch_related("followings", "followers")
+    return user
 
 
 @router.put("/me", response_model=schemas.User)
