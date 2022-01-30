@@ -34,14 +34,6 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
-    # @property
-    # def num_followings(self) -> int:
-    #     return len(self.followings)
-    #
-    # @property
-    # def num_followers(self) -> int:
-    #     return len(self.followers)
-
     @property
     def detail(self) -> Optional[schemas.Detail]:
         try:
