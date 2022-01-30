@@ -47,6 +47,7 @@ class User(models.Model):
         try:
             return schemas.Detail(
                 desc=self.desc,
+                num_posts=0,  # TODO : Not implemented
                 num_followers=len(self.followers),
                 num_followings=len(self.followings)
             )
