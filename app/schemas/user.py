@@ -18,18 +18,20 @@ class UserBase(BaseModel):
         orm_mode = True
 
 
-class User(UserBase):
+class Detail(BaseModel):
     desc: str
+    num_followers: int
+    num_followings: int
+
+
+class User(UserBase):
     is_verified: bool
     registered_at: datetime
+    detail: Optional[Detail]
 
 
-class UserPublicOut(User):
+class UserPublic(User):
     email: SecretStr
-
-
-class UserPublicIn(BaseModel):
-    username: str
 
 
 class UserCreate(UserBase):
@@ -43,3 +45,4 @@ class UserLogin(BaseModel):
 
 class UserUpdate(BaseModel):
     nickname: Optional[str] = None
+    desc: Optional[str] = None
