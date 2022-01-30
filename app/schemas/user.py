@@ -43,3 +43,4 @@ class UserLogin(BaseModel):
 
 class UserUpdate(BaseModel):
     nickname: Optional[str] = None
+    desc: Optional[str] = None
