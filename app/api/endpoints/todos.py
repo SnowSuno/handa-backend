@@ -51,7 +51,7 @@ async def update_todo(
 
 
 @router.delete("/{todo_id}", response_model=None, status_code=204)
-async def update_todo(
+async def delete_todo(
         prev_todo: models.Todo = Depends(get_updateable_todo)
 ):
     await prev_todo.delete()
