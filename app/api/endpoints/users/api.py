@@ -10,6 +10,7 @@ router = APIRouter(
 
 @router.get("/me", response_model=schemas.User)
 async def read_current_user(current_user: models.User = Depends(get_current_user)):
+    await current_user.fetch_related("followings", "followers")
     return current_user
 
 

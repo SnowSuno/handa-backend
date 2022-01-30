@@ -22,10 +22,18 @@ class User(UserBase):
     desc: str
     is_verified: bool
     registered_at: datetime
+    num_followings: int
+    num_followers: int
+
+    class Config:
+        orm_mode = True
 
 
 class UserPublicOut(User):
     email: SecretStr
+
+    class Config:
+        orm_mode = True
 
 
 class UserPublicIn(BaseModel):

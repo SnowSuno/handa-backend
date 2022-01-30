@@ -33,6 +33,14 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
+    @property
+    def num_followings(self) -> int:
+        return len(self.followings)
+
+    @property
+    def num_followers(self) -> int:
+        return len(self.followers)
+
     @classmethod
     async def register(cls, user: schemas.UserCreate):
         return await cls.create(
