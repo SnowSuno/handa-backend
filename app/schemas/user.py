@@ -19,6 +19,7 @@ class UserBase(BaseModel):
 
 
 class User(UserBase):
+    desc: str
     is_verified: bool
     registered_at: datetime
 

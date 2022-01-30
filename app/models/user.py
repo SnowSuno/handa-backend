@@ -16,6 +16,7 @@ class User(models.Model):
     username = fields.CharField(max_length=30, unique=True)
     email = fields.CharField(max_length=50, unique=True)
     nickname = fields.CharField(max_length=30)
+    desc = fields.TextField(default="")
     hashed_password = fields.CharField(max_length=200)
     is_verified = fields.BooleanField(default=False)
     is_active = fields.BooleanField(default=False)
