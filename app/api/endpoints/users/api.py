@@ -17,7 +17,7 @@ async def read_current_user(
         current_user: models.User = Depends(get_current_user)
 ):
     if detail:
-        await current_user.fetch_related("followings", "followers")
+        await current_user.fetch_related("followings", "followers", "todos")
     return current_user
 
 
@@ -31,7 +31,7 @@ async def read_user(
 ):
     user = await models.User.get(username=username)
     if detail:
-        await user.fetch_related("followings", "followers")
+        await user.fetch_related("followings", "followers", "todos")
     return user
 
 

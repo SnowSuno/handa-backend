@@ -20,8 +20,10 @@ class UserBase(BaseModel):
 
 class Detail(BaseModel):
     desc: str
+    num_posts: int
     num_followers: int
     num_followings: int
+    num_completed_todos: int
 
 
 class User(UserBase):

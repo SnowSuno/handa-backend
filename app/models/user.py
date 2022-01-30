@@ -31,27 +31,23 @@ class User(models.Model):
 
     followers: fields.ManyToManyRelation["User"]
 
-    def __str__(self):
-        return self.username
-
-    # @property
-    # def num_followings(self) -> int:
-    #     return len(self.followings)
-    #
-    # @property
-    # def num_followers(self) -> int:
-    #     return len(self.followers)
-
     @property
     def detail(self) -> Optional[schemas.Detail]:
         try:
             return schemas.Detail(
                 desc=self.desc,
+                num_posts=0,  # TODO : Not implemented
                 num_followers=len(self.followers),
-                num_followings=len(self.followings)
+                num_followings=len(self.followings),
+                num_completed_todos=len([
+                    todo for todo in self.todos if todo.is_done
+                ])
             )
         except NoValuesFetched:
             return None
+
+    def __str__(self):
+        return self.username
 
     @classmethod
     async def register(cls, user: schemas.UserCreate):
