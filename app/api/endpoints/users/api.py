@@ -14,9 +14,21 @@ async def read_current_user(current_user: models.User = Depends(get_current_user
     return current_user
 
 
-@router.get("/{username}", response_model=schemas.UserPublicOut)
+@router.get("/me/detail", response_model=schemas.UserDetail)
+async def read_current_user_detail(current_user: models.User = Depends(get_current_user)):
+    await current_user.fetch_related("followings", "followers")
+    return current_user
+
+
+@router.get("/{username}", response_model=schemas.UserPublic)
 async def read_user(username: str):
     return await models.User.get(username=username)
+
+
+@router.get("/{username}/detail", response_model=schemas.UserPublicDetail)
+async def read_user_detail(username: str):
+    return await models.User.get(username=username)\
+        .prefetch_related("followings", "followers")
 
 
 @router.put("/me", response_model=schemas.User)
