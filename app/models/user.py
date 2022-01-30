@@ -31,9 +31,6 @@ class User(models.Model):
 
     followers: fields.ManyToManyRelation["User"]
 
-    def __str__(self):
-        return self.username
-
     @property
     def detail(self) -> Optional[schemas.Detail]:
         try:
@@ -45,6 +42,9 @@ class User(models.Model):
             )
         except NoValuesFetched:
             return None
+
+    def __str__(self):
+        return self.username
 
     @classmethod
     async def register(cls, user: schemas.UserCreate):
