@@ -35,7 +35,10 @@ async def read_user(
     return user
 
 
-@router.put("/me", response_model=schemas.User)
+@router.put(
+    "/me",
+    response_model=schemas.User,
+    response_model_exclude_none=True)
 async def update_current_user(
         user: schemas.UserUpdate,
         current_user: models.User = Depends(get_current_user)

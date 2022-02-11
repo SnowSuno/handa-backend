@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, constr, SecretStr
+from pydantic import BaseModel, EmailStr, constr, Field
 from datetime import datetime
 
 
@@ -26,6 +26,10 @@ class Detail(BaseModel):
     num_completed_todos: int
 
 
+# class Public(BaseModel):
+#     email: SecretStr
+
+
 class User(UserBase):
     is_verified: bool
     registered_at: datetime
@@ -33,7 +37,9 @@ class User(UserBase):
 
 
 class UserPublic(User):
-    email: SecretStr
+    # email = None
+    email: str = Field(..., exclude=True)
+    # pass
 
 
 class UserCreate(UserBase):
