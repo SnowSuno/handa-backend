@@ -13,9 +13,9 @@ python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 fastapi-admin = "^1.0.3"
 pydantic = {extras = ["email", "dotenv"], version = "^1.9.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
-fakeredis = "^1.7.0"
+fakeredis = "^1.7.1"
 aerich = "^0.6.2"
-boto3 = "^1.20.54"
+boto3 = "^1.21.0"
 asyncpg = "^0.25.0"
 
 [tool.poetry.dev-dependencies]
