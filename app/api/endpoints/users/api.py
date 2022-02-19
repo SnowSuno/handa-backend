@@ -10,28 +10,37 @@ router = APIRouter(
 
 @router.get(
     "/me",
-    response_model=schemas.User,
-    response_model_exclude_none=True)
+    response_model=schemas.User)
 async def read_current_user(
-        detail: bool = False,
         current_user: models.User = Depends(get_current_user)
 ):
-    if detail:
-        await current_user.fetch_related("followings", "followers", "todos")
+    return current_user
+
+
+@router.get(
+    "/me/detail",
+    response_model=schemas.UserWithDetail)
+async def read_current_user_with_detail(
+        current_user: models.User = Depends(get_current_user)
+):
+    await current_user.get_details()
     return current_user
 
 
 @router.get(
     "/{username}",
-    response_model=schemas.UserPublic,
-    response_model_exclude_none=True)
-async def read_user(
-        username: str,
-        detail: bool = False,
-):
+    response_model=schemas.User)
+async def read_user(username: str):
     user = await models.User.get(username=username)
-    if detail:
-        await user.fetch_related("followings", "followers", "todos")
+    return user
+
+
+@router.get(
+    "/{username}/detail",
+    response_model=schemas.UserWithDetail)
+async def read_user_with_detail(username: str):
+    user = await models.User.get(username=username)
+    await user.get_details()
     return user
 
 
