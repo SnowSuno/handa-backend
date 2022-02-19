@@ -52,9 +52,16 @@ async def read_followings(username: str):
 
 @router.get(
     "/me/followers",
-    response_model=list[schemas.User])
+    response_model=list[schemas.Follower])
 async def read_followers_of_current_user(current_user: models.User = Depends(get_current_user)):
-    return await current_user.followers
+    await current_user.fetch_related("followings", "followers")
+
+    followers = [schemas.Follower(
+        **follower.__dict__,
+        following=follower in current_user.followings
+    ) for follower in current_user.followers]
+
+    return followers
 
 
 @router.delete(

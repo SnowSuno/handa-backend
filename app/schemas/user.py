@@ -36,6 +36,10 @@ class UserWithDetail(User):
     detail: Detail
 
 
+class Follower(User):
+    following: bool
+
+
 class UserCreate(UserBase):
     email: EmailStr
     password: str
