@@ -7,16 +7,22 @@ router = APIRouter(
 )
 
 
-@router.put(
-    "/follow",
-    response_model=schemas.UserPublic,
-    responses={404: {}, 400: {}},
-    response_model_exclude_none=True)
+@router.get(
+    "/me/followings",
+    response_model=list[schemas.User])
+async def read_followings_of_current_user(current_user: models.User = Depends(get_current_user)):
+    return await current_user.followings
+
+
+@router.post(
+    "/me/followings/{username}",
+    response_model=schemas.User,
+    responses={404: {}, 400: {}})
 async def follow_user(
-        user: schemas.FollowUser,
+        username: str,
         current_user: models.User = Depends(get_current_user),
 ):
-    user_obj = await models.User.get(username=user.username)
+    user_obj = await models.User.get(username=username)
     if user_obj == current_user:
         raise HTTPException(
             status_code=400,
@@ -27,27 +33,18 @@ async def follow_user(
     return user_obj
 
 
-@router.put("/unfollow", status_code=204)
+@router.delete("/me/followings/{username}", status_code=204)
 async def unfollow_user(
-        user: schemas.FollowUser,
+        username: str,
         current_user: models.User = Depends(get_current_user),
 ):
-    user_obj = await models.User.get(username=user.username)
+    user_obj = await models.User.get(username=username)
     await current_user.followings.remove(user_obj)
 
 
 @router.get(
-    "/me/followings",
-    response_model=list[schemas.UserPublic],
-    response_model_exclude_none=True)
-async def read_followings_of_current_user(current_user: models.User = Depends(get_current_user)):
-    return await current_user.followings
-
-
-@router.get(
     "/{username}/followings",
-    response_model=list[schemas.UserPublic],
-    response_model_exclude_none=True)
+    response_model=list[schemas.User])
 async def read_followings(username: str):
     user_obj = await models.User.get(username=username)
     return await user_obj.followings
@@ -55,16 +52,30 @@ async def read_followings(username: str):
 
 @router.get(
     "/me/followers",
-    response_model=list[schemas.UserPublic],
-    response_model_exclude_none=True)
+    response_model=list[schemas.Follower])
 async def read_followers_of_current_user(current_user: models.User = Depends(get_current_user)):
-    return await current_user.followers
+    await current_user.fetch_related("followings", "followers")
+
+    followers = [schemas.Follower(
+        **follower.__dict__,
+        following=follower in current_user.followings
+    ) for follower in current_user.followers]
+
+    return followers
+
+
+@router.delete(
+    "/me/followers/{username}", status_code=204)
+async def delete_follower_of_current_user(
+        username: str,
+        current_user: models.User = Depends(get_current_user)):
+    user_obj = await models.User.get(username=username)
+    await current_user.followers.remove(user_obj)
 
 
 @router.get(
     "/{username}/followers",
-    response_model=list[schemas.UserPublic],
-    response_model_exclude_none=True)
+    response_model=list[schemas.User])
 async def read_followers(username: str):
     user_obj = await models.User.get(username=username)
     return await user_obj.followers

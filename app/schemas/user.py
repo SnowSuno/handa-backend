@@ -11,7 +11,7 @@ class UserCheck(BaseModel):
 
 class UserBase(BaseModel):
     username: constr(max_length=30)
-    email: EmailStr
+    # email: EmailStr
     nickname: constr(max_length=30)
 
     class Config:
@@ -26,23 +26,22 @@ class Detail(BaseModel):
     num_completed_todos: int
 
 
-# class Public(BaseModel):
-#     email: SecretStr
-
-
 class User(UserBase):
     is_verified: bool
     registered_at: datetime
-    detail: Optional[Detail]
+    # detail: Optional[Detail]
 
 
-class UserPublic(User):
-    # email = None
-    email: str = Field(..., exclude=True)
-    # pass
+class UserWithDetail(User):
+    detail: Detail
+
+
+class Follower(User):
+    following: bool
 
 
 class UserCreate(UserBase):
+    email: EmailStr
     password: str
 
 

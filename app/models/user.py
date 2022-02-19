@@ -82,3 +82,6 @@ class User(models.Model):
             return await cls.get(email=valid.email)
         except EmailNotValidError:
             return await cls.get_or_none(username=identifier)
+
+    async def get_details(self):
+        await self.fetch_related("followings", "followers", "todos")

@@ -21,8 +21,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> models.User:
         raise credentials_exception
 
     user = await models.User.get_or_none(id=user_id)
-        # .prefetch_related("followers")\
-        # .prefetch_related("followings")
     if user is None:
         raise credentials_exception
 
