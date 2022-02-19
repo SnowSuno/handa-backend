@@ -1,11 +1,20 @@
 from fastapi import APIRouter, Depends
 from app import schemas, models
 from app.core.dependancies import get_current_user
+from tortoise.expressions import Q
 
 router = APIRouter(
     responses={401: {}},
     tags=["user"]
 )
+
+
+@router.get("/", response_model=list[schemas.User])
+async def search_users(search: str):
+    return await models.User.filter(
+        Q(username__contains=search) |
+        Q(nickname__contains=search)
+    )
 
 
 @router.get(
